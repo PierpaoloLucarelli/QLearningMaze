@@ -41,21 +41,36 @@ class Maze(tk.Tk, object):
 
 		bad_center = bad_origin + np.array([SCALE/2, SCALE/2])
 		self.bad1 = self.canvas.create_rectangle(
-            bad_center[0] - SCALE/2, bad_center[1] - SCALE/2,
-            bad_center[0] + SCALE/2, bad_center[1] + SCALE/2,
-            fill='black')
+			bad_center[0] - SCALE/2, bad_center[1] - SCALE/2,
+			bad_center[0] + SCALE/2, bad_center[1] + SCALE/2,
+			fill='black')
 		bad_origin2 = np.array([3*SCALE, 2*SCALE]);
 		bad_center2 = bad_origin2 + np.array([SCALE/2, SCALE/2])
 		self.bad2 = self.canvas.create_rectangle(
-            bad_center2[0] - SCALE/2, bad_center2[1] - SCALE/2,
-            bad_center2[0] + SCALE/2, bad_center2[1] + SCALE/2,
-            fill='black')
+			bad_center2[0] - SCALE/2, bad_center2[1] - SCALE/2,
+			bad_center2[0] + SCALE/2, bad_center2[1] + SCALE/2,
+			fill='black')
 		bad_origin3 = np.array([1*SCALE, 3*SCALE]);
 		bad_center3 = bad_origin3 + np.array([SCALE/2, SCALE/2])
 		self.bad3 = self.canvas.create_rectangle(
-            bad_center3[0] - SCALE/2, bad_center3[1] - SCALE/2,
-            bad_center3[0] + SCALE/2, bad_center3[1] + SCALE/2,
-            fill='black')
+			bad_center3[0] - SCALE/2, bad_center3[1] - SCALE/2,
+			bad_center3[0] + SCALE/2, bad_center3[1] + SCALE/2,
+			fill='black')
+
+		# actor
+		oval_center = np.array([SCALE/2, SCALE/2])
+		self.oval = self.canvas.create_oval(
+			oval_center[0] - SCALE/2, oval_center[1] - SCALE/2,
+			oval_center[0] + SCALE/2, oval_center[1] + SCALE/2,
+			fill='yellow')
+
+		# goal
+		goal_center = np.array([2*SCALE, 3*SCALE])
+		goal_origin = goal_center + np.array([SCALE/2, SCALE/2])
+		self.rect = self.canvas.create_rectangle(
+            goal_origin[0] - SCALE/2, goal_origin[1] - SCALE/2,
+            goal_origin[0] + SCALE/2, goal_origin[1] + SCALE/2,
+            fill='red')
 
 		self.canvas.pack()
 
