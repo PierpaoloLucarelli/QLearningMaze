@@ -57,22 +57,60 @@ class Maze(tk.Tk, object):
 			bad_center3[0] + SCALE/2, bad_center3[1] + SCALE/2,
 			fill='black')
 
-		# actor
-		oval_center = np.array([SCALE/2, SCALE/2])
+		# goal
+		goal_center = np.array([2*SCALE, 3*SCALE])
+		oval_center = goal_center + np.array([SCALE/2, SCALE/2])
 		self.oval = self.canvas.create_oval(
 			oval_center[0] - SCALE/2, oval_center[1] - SCALE/2,
 			oval_center[0] + SCALE/2, oval_center[1] + SCALE/2,
 			fill='yellow')
 
-		# goal
-		goal_center = np.array([2*SCALE, 3*SCALE])
-		goal_origin = goal_center + np.array([SCALE/2, SCALE/2])
+		# actor
+		goal_origin = np.array([(2*SCALE)+SCALE/2, (2*SCALE)+SCALE/2])
 		self.rect = self.canvas.create_rectangle(
             goal_origin[0] - SCALE/2, goal_origin[1] - SCALE/2,
             goal_origin[0] + SCALE/2, goal_origin[1] + SCALE/2,
             fill='red')
 
 		self.canvas.pack()
+		# self.reset()
+
+	def reset(self):
+		self.update()
+		time.sleep(0.5)
+		self.canvas.delete(self.rect)
+		rect_origin = np.array([SCALE/2, SCALE/2])
+		self.rect = self.canvas.create_rectangle(
+            rect_origin[0] - SCALE/2, rect_origin[1] - SCALE/2,
+            rect_origin[0] + SCALE/2, rect_origin[1] + SCALE/2,
+            fill='red')
+		# print(self.canvas.coords(self.rect))
+		return self.canvas.coords(self.rect)
+
+	def step(self, action):
+		self.update()
+		time.sleep(0.5)
+		s = self.canvas.coords(self.rect)
+		base_action = np.array([0,0])
+		if action == 0: #up
+			if s[1] >= SCALE:
+				base_action[1] -= SCALE
+		if action == 1: #right
+			print(s)
+			if s[0] < WIDTH - SCALE:
+				base_action[0] += SCALE
+		if action == 2: #down
+			if s[1] < HEIGHT - SCALE:
+				base_action[1] += SCALE
+		if action == 3: #left
+			if s[0] >= SCALE:
+				base_action[0] -= SCALE
+
+		self.canvas.move(self.rect, base_action[0], base_action[1])
+
+
+
+
 
 
 
