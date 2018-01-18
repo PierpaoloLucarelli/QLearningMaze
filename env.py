@@ -88,7 +88,7 @@ class Maze(tk.Tk, object):
 
 	def step(self, action):
 		self.update()
-		time.sleep(0.5)
+		time.sleep(0.1)
 		s = self.canvas.coords(self.rect)
 		base_action = np.array([0,0])
 		if action == 0: #up
