@@ -88,22 +88,31 @@ class Maze(tk.Tk, object):
 
 	def step(self, action):
 		self.update()
-		time.sleep(0.1)
+		# time.sleep(0.1)
+		oob = False
 		s = self.canvas.coords(self.rect)
 		base_action = np.array([0,0])
 		if action == 0: #up
 			if s[1] >= SCALE:
 				base_action[1] -= SCALE
+			else:
+				oob = True
 		elif action == 1: #right
 			print(s)
 			if s[0] < WIDTH - SCALE:
 				base_action[0] += SCALE
+			else:
+				oob = True
 		elif action == 2: #down
 			if s[1] < HEIGHT - SCALE:
 				base_action[1] += SCALE
+			else:
+				oob = True
 		elif action == 3: #left
 			if s[0] >= SCALE:
 				base_action[0] -= SCALE
+			else:
+				oob = True
 
 		self.canvas.move(self.rect, base_action[0], base_action[1])
 
@@ -111,14 +120,14 @@ class Maze(tk.Tk, object):
 		s_ = self.canvas.coords(self.rect)
 
 		# get the reward
-		r, done = self.reward(s_)
+		r, done = self.reward(s_, oob)
 		return s_, r, done
 
-	def reward(self, state):
+	def reward(self, state, oob):
 		if state == self.canvas.coords(self.oval):
 			r = 1
 			done = True
-		elif state in [self.canvas.coords(self.bad1), self.canvas.coords(self.bad2), self.canvas.coords(self.bad3)]:
+		elif state in [self.canvas.coords(self.bad1), self.canvas.coords(self.bad2), self.canvas.coords(self.bad3)] or oob == True:
 			r = -1
 			done = True
 		else:
@@ -127,7 +136,7 @@ class Maze(tk.Tk, object):
 		return r, done
 
 	def render(self):
-		time.sleep(0.1)
+		# time.sleep(0.1)
 		self.update()
 
 

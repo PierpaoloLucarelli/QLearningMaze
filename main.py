@@ -1,7 +1,9 @@
 from env import Maze
 from rl_brain import QLearn
+import time
 
 def update():
+	start_time = time.time()
 	for episode in range(100):
 		# initial observation
 		observation = env.reset()
@@ -26,6 +28,7 @@ def update():
 			if done:
 				break
 	# end of game
+	print "My program took", time.time() - start_time, "to run"
 	print('game over')
 	env.destroy()
 
