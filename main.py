@@ -17,7 +17,7 @@ def update():
 			observation_, reward, done = env.step(action)
 
 			# RL learn from this transition
-			RL.learn(str(observation), action, reward, str(observation_))
+			RL.learn(str(observation), action, reward, str(observation_), done)
 
 			# swap observation
 			observation = observation_

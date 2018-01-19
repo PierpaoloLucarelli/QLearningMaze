@@ -26,12 +26,12 @@ class QLearn:
 			action = np.random.choice(self.actions)
 		return action
 
-	def learn(self, s, a, r, s_):
+	def learn(self, s, a, r, s_, done):
 		self.check_state_exist(s_)
 		# get the Q value of the action a at state s
 		q_predict = self.q_table.ix[s, a]
 		
-		if s_ != 'terminal':
+		if done == False:
 			q_target = r + self.gamma * self.q_table.ix[s_, :].max()  # next state is not terminal
 		else:
 			q_target = r  # next state is terminal
