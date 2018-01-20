@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import cPickle as pickle
 
 class QLearn:
 	def __init__(self, actions, learning_rate=0.01, reward_decay=0.9, e_greedy=0.9):
@@ -12,6 +13,7 @@ class QLearn:
 	# chose the next action to take based on the observation (position of actor)
 	def choose_action(self, observation):
 		self.check_state_exist(observation)
+		# print(self.q_table)
 		# based on epsilon, chose either the best action or a random action (eploration vs exploitation)
 		if np.random.uniform() < self.epsilon:
 			# chose best action epsilon % of the time

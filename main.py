@@ -4,13 +4,16 @@ import time
 
 def update():
 	start_time = time.time()
-	for episode in range(100):
+	for episode in range(5000):
 		# initial observation
 		observation = env.reset()
-
+		print(episode)
 		while True:
 			# fresh env
-			env.render()
+			slow = False
+			if(episode > 4900):
+				slow = True
+			env.render(slow)
 
 			# RL choose action based on observation
 			action = RL.choose_action(str(observation))
@@ -31,6 +34,7 @@ def update():
 	print "My program took", time.time() - start_time, "to run"
 	print('game over')
 	env.destroy()
+
 
 if __name__ == '__main__':
 	env = Maze()

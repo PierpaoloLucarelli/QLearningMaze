@@ -105,8 +105,8 @@ class Maze(tk.Tk, object):
 			fill='red')
 
 		# print(self.canvas.coords(self.rect))
-		# enemy_pos = self.canvas.coords(self.enemy)
-		return self.canvas.coords(self.rect)
+		enemy_pos = self.canvas.coords(self.enemy)[:2]
+		return np.append(self.canvas.coords(self.rect)[:2], enemy_pos)
 
 	def step(self, action):
 		self.update()
@@ -120,10 +120,10 @@ class Maze(tk.Tk, object):
 		self.canvas.move(self.enemy, enemy_base_action[0], enemy_base_action[1])
 		# get next state
 		s_ = self.canvas.coords(self.rect)
-		enemy_s = self.canvas.coords(self.enemy)
+		enemy_s = self.canvas.coords(self.enemy)[:2]
 		# get the reward
 		r, done = self.reward(s_, enemy_s, oob)
-		return s_, r, done
+		return np.append(s_[:2], enemy_s), r, done
 
 	def reward(self, state, enemy_state, oob):
 		if state == self.canvas.coords(self.oval):
@@ -165,9 +165,9 @@ class Maze(tk.Tk, object):
 				oob = True
 		return base_action, oob
 
-	def render(self):
-		if(SLOW_RENDER):
-			time.sleep(0.1)
+	def render(self, slow=False):
+		if(SLOW_RENDER or slow):
+			time.sleep(0.2)
 		self.update()
 
 
