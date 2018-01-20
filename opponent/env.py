@@ -1,7 +1,6 @@
 import numpy as np
 import time
 import sys
-from random import randint
 if sys.version_info.major == 2:
 	import Tkinter as tk
 else:
@@ -71,14 +70,6 @@ class Maze(tk.Tk, object):
 		self.rect = self.canvas.create_rectangle(
 			goal_origin[0] - SCALE/2, goal_origin[1] - SCALE/2,
 			goal_origin[0] + SCALE/2, goal_origin[1] + SCALE/2,
-			fill='green')
-
-		# enemy
-		enemy_origin = np.array([2*SCALE, 4*SCALE])
-		enemy_center = enemy_origin + np.array([SCALE/2, SCALE/2])
-		self.enemy = self.canvas.create_rectangle(
-			enemy_center[0] - SCALE/2, enemy_center[1] - SCALE/2,
-			enemy_center[0] + SCALE/2, enemy_center[1] + SCALE/2,
 			fill='red')
 
 		self.canvas.pack()
@@ -91,21 +82,39 @@ class Maze(tk.Tk, object):
 		self.rect = self.canvas.create_rectangle(
 			rect_origin[0] - SCALE/2, rect_origin[1] - SCALE/2,
 			rect_origin[0] + SCALE/2, rect_origin[1] + SCALE/2,
-			fill='green')
+			fill='red')
 		# print(self.canvas.coords(self.rect))
 		return self.canvas.coords(self.rect)
 
 	def step(self, action):
 		self.update()
-		time.sleep(0.1)
+		# time.sleep(0.1)
+		oob = False
 		s = self.canvas.coords(self.rect)
-		enemy_s = self.canvas.coords(self.enemy)
-		base_action, oob = self.action_outcome(action, s)
+		base_action = np.array([0,0])
+		if action == 0: #up
+			if s[1] >= SCALE:
+				base_action[1] -= SCALE
+			else:
+				oob = True
+		elif action == 1: #right
+			print(s)
+			if s[0] < WIDTH - SCALE:
+				base_action[0] += SCALE
+			else:
+				oob = True
+		elif action == 2: #down
+			if s[1] < HEIGHT - SCALE:
+				base_action[1] += SCALE
+			else:
+				oob = True
+		elif action == 3: #left
+			if s[0] >= SCALE:
+				base_action[0] -= SCALE
+			else:
+				oob = True
+
 		self.canvas.move(self.rect, base_action[0], base_action[1])
-		enemy_base_action = self.action_outcome(randint(0,3), enemy_s)[0]
-		print(enemy_base_action)
-		print(base_action)
-		self.canvas.move(self.enemy, enemy_base_action[0], enemy_base_action[1])
 
 		# get next state
 		s_ = self.canvas.coords(self.rect)
@@ -126,33 +135,8 @@ class Maze(tk.Tk, object):
 			done = False
 		return r, done
 
-	def action_outcome(self, action, s):
-		oob = False
-		base_action = np.array([0,0])
-		if action == 0: #up
-			if s[1] >= SCALE:
-				base_action[1] -= SCALE
-			else:
-				oob = True
-		elif action == 1: #right
-			if s[0] < WIDTH - SCALE:
-				base_action[0] += SCALE
-			else:
-				oob = True
-		elif action == 2: #down
-			if s[1] < HEIGHT - SCALE:
-				base_action[1] += SCALE
-			else:
-				oob = True
-		elif action == 3: #left
-			if s[0] >= SCALE:
-				base_action[0] -= SCALE
-			else:
-				oob = True
-		return base_action, oob
-
 	def render(self):
-		time.sleep(0.1)
+		# time.sleep(0.1)
 		self.update()
 
 
