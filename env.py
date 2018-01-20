@@ -87,11 +87,22 @@ class Maze(tk.Tk, object):
 		# self.update()
 		# time.sleep(0.5)
 		self.canvas.delete(self.rect)
+		self.canvas.delete(self.enemy)
+
 		rect_origin = np.array([SCALE/2, SCALE/2])
 		self.rect = self.canvas.create_rectangle(
 			rect_origin[0] - SCALE/2, rect_origin[1] - SCALE/2,
 			rect_origin[0] + SCALE/2, rect_origin[1] + SCALE/2,
 			fill='green')
+
+		# enemy
+		enemy_origin = np.array([2*SCALE, 4*SCALE])
+		enemy_center = enemy_origin + np.array([SCALE/2, SCALE/2])
+		self.enemy = self.canvas.create_rectangle(
+			enemy_center[0] - SCALE/2, enemy_center[1] - SCALE/2,
+			enemy_center[0] + SCALE/2, enemy_center[1] + SCALE/2,
+			fill='red')
+
 		# print(self.canvas.coords(self.rect))
 		return self.canvas.coords(self.rect)
 
@@ -103,22 +114,22 @@ class Maze(tk.Tk, object):
 		base_action, oob = self.action_outcome(action, s)
 		self.canvas.move(self.rect, base_action[0], base_action[1])
 		enemy_base_action = self.action_outcome(randint(0,3), enemy_s)[0]
-		print(enemy_base_action)
-		print(base_action)
 		self.canvas.move(self.enemy, enemy_base_action[0], enemy_base_action[1])
-
 		# get next state
 		s_ = self.canvas.coords(self.rect)
-
+		enemy_s = self.canvas.coords(self.enemy)
 		# get the reward
-		r, done = self.reward(s_, oob)
+		r, done = self.reward(s_, enemy_s, oob)
 		return s_, r, done
 
-	def reward(self, state, oob):
+	def reward(self, state, enemy_state, oob):
 		if state == self.canvas.coords(self.oval):
 			r = 1
 			done = True
 		elif state in [self.canvas.coords(self.bad1), self.canvas.coords(self.bad2), self.canvas.coords(self.bad3)] or oob == True:
+			r = -1
+			done = True
+		elif np.array_equal(state, enemy_state):
 			r = -1
 			done = True
 		else:
