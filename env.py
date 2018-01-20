@@ -11,6 +11,7 @@ else:
 WIDTH = 400
 HEIGHT = 400
 SCALE = 80
+SLOW_RENDER = False
 
 class Maze(tk.Tk, object):
 	# constructor
@@ -104,11 +105,13 @@ class Maze(tk.Tk, object):
 			fill='red')
 
 		# print(self.canvas.coords(self.rect))
+		# enemy_pos = self.canvas.coords(self.enemy)
 		return self.canvas.coords(self.rect)
 
 	def step(self, action):
 		self.update()
-		time.sleep(0.1)
+		if(SLOW_RENDER):
+			time.sleep(0.1)
 		s = self.canvas.coords(self.rect)
 		enemy_s = self.canvas.coords(self.enemy)
 		base_action, oob = self.action_outcome(action, s)
@@ -129,9 +132,9 @@ class Maze(tk.Tk, object):
 		elif state in [self.canvas.coords(self.bad1), self.canvas.coords(self.bad2), self.canvas.coords(self.bad3)] or oob == True:
 			r = -1
 			done = True
-		elif np.array_equal(state, enemy_state):
-			r = -1
-			done = True
+		# elif np.array_equal(state, enemy_state):
+		# 	r = -1
+		# 	done = True
 		else:
 			r = 0
 			done = False
@@ -163,7 +166,8 @@ class Maze(tk.Tk, object):
 		return base_action, oob
 
 	def render(self):
-		time.sleep(0.1)
+		if(SLOW_RENDER):
+			time.sleep(0.1)
 		self.update()
 
 
