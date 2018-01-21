@@ -49,3 +49,8 @@ class QLearn:
 					name=state,
 				)
 			)
+	def save_Qtable(self):
+		self.q_table.to_pickle("actions")
+
+	def load_Qtable(self):
+		self.q_table = pd.read_pickle("actions")

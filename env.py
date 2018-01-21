@@ -22,6 +22,8 @@ class Maze(tk.Tk, object):
 		self.title('qmaze')
 		self.geometry('{0}x{1}'.format(WIDTH, HEIGHT))
 		self.build_maze()
+		self.win_count = 0
+		self.dead_count = 0
 
 	# create env maze
 	def build_maze(self):
@@ -129,9 +131,11 @@ class Maze(tk.Tk, object):
 		if state == self.canvas.coords(self.oval):
 			r = 1
 			done = True
-		elif state in [self.canvas.coords(self.bad1), self.canvas.coords(self.bad2), self.canvas.coords(self.bad3)] or oob == True:
+			self.win_count = self.win_count+1
+		elif self.actor_in_hell(state) or oob == True:
 			r = -1
 			done = True
+			self.dead_count = self.dead_count+1
 		# elif np.array_equal(state, enemy_state):
 		# 	r = -1
 		# 	done = True
@@ -165,10 +169,18 @@ class Maze(tk.Tk, object):
 				oob = True
 		return base_action, oob
 
+
 	def render(self, slow=False):
 		if(SLOW_RENDER or slow):
-			time.sleep(0.2)
+			time.sleep(0.1)
 		self.update()
+
+	def actor_in_hell(self, state):
+		return state in [self.canvas.coords(self.bad1), self.canvas.coords(self.bad2), self.canvas.coords(self.bad3)]
+
+	def get_game_stats(self):
+		return "Goal count: " + str(self.win_count) + "\nDeath count: " + str(self.dead_count)
+
 
 
 
