@@ -136,9 +136,9 @@ class Maze(tk.Tk, object):
 			r = -1
 			done = True
 			self.dead_count = self.dead_count+1
-		# elif np.array_equal(state, enemy_state):
-		# 	r = -1
-		# 	done = True
+		elif np.array_equal(state, enemy_state):
+			r = -1
+			done = True
 		else:
 			r = 0
 			done = False
