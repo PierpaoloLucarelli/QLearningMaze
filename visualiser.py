@@ -62,7 +62,7 @@ class Visualiser(tk.Tk, object):
 		self.canvas.pack()
 
 	def update_canvas(self, actor, enemy):
-		time.sleep(0.1)
+		time.sleep(0.2)
 		self.canvas.delete(self.actor_ref)
 		self.canvas.delete(self.enemy_ref)
 		self.actor_ref = self.canvas.create_rectangle(

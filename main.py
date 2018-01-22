@@ -4,6 +4,7 @@ from rl_brain import QLearn
 import time
 
 TEST = False
+VIS = False
 N_EPISODES = 5000
 def test():
 	start_time = time.time()
@@ -13,6 +14,8 @@ def test():
 		if(episode % 500 == 0):
 			print(str(float(episode) / N_EPISODES * 100) + "%")
 		while True:
+			if(VIS):
+				vis.update_canvas(env.actor, env.enemy)
 			# RL choose action based on observation
 			action = RL.choose_action(str(observation))
 
@@ -50,6 +53,8 @@ if __name__ == '__main__':
 	if(TEST):
 		env = Maze()
 		RL = QLearn(actions=list(range(env.n_actions)))
+		if(VIS):
+			vis = Visualiser(4,4,80, env.hell_blocks, env.goal, env.enemy)
 		test()
 	else:
 		env = Maze()
