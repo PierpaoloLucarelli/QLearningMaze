@@ -1,22 +1,18 @@
-from env import Maze
+from maze_env import Maze
+from visualiser import Visualiser
 from rl_brain import QLearn
 import time
 
 TEST = False
-
-def update():
+N_EPISODES = 5000
+def test():
 	start_time = time.time()
-	for episode in range(5000):
+	for episode in range(N_EPISODES):
 		# initial observation
 		observation = env.reset()
-		print(episode)
+		if(episode % 500 == 0):
+			print(str(float(episode) / N_EPISODES * 100) + "%")
 		while True:
-			# fresh env
-			slow = False
-			# if(episode > 4900):
-			# 	slow = True
-			env.render(slow)
-
 			# RL choose action based on observation
 			action = RL.choose_action(str(observation))
 
@@ -35,7 +31,6 @@ def update():
 	# end of game
 	print "My program took", time.time() - start_time, "to run"
 	print('game over')
-	env.destroy()
 	RL.save_Qtable()
 
 def run_optimal():
@@ -43,23 +38,24 @@ def run_optimal():
 	for episode in range(20):
 		observation = env.reset()
 		while(True):
-			slow = True
-			env.render(slow)
+			vis.update_canvas(env.actor, env.enemy)
 			action = RL.choose_action(str(observation))
 			observation_, reward, done = env.step(action)
 			observation = observation_
 			if done:
 				break
-	env.destroy()
-	print(env.get_game_stats())
+	vis.destroy()
 
 if __name__ == '__main__':
-	env = Maze()
 	if(TEST):
+		env = Maze()
 		RL = QLearn(actions=list(range(env.n_actions)))
-		env.after(100, update)
-		env.mainloop()
+		test()
 	else:
+		env = Maze()
+		vis = Visualiser(4,4,80, env.hell_blocks, env.goal, env.enemy)
 		RL = QLearn(actions=list(range(env.n_actions)), e_greedy=1.0)
-		env.after(100, run_optimal)
-		env.mainloop()
+		run_optimal()
+
+
+

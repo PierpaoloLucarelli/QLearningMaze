@@ -15,7 +15,6 @@ class Maze(object):
 		self.actor = np.array([0,0])
 		self.enemy = np.array([2,4])
 
-
 	def reset(self):
 		self.actor = np.array([0,0])
 		self.enemy = np.array([2,4])
@@ -25,7 +24,7 @@ class Maze(object):
 		s = self.actor
 		enemy_s = self.enemy
 		base_action = self.action_outcome(action, s)
-		enemy_action = self.action_outcome(randint(0,0), enemy_s)
+		enemy_action = self.action_outcome(randint(0,3), enemy_s)
 		self.actor = self.actor + base_action
 		self.enemy = self.enemy + enemy_action
 		reward, done = self.reward()
@@ -89,20 +88,12 @@ class Maze(object):
 			output += "\n"
 		return output
 
-if __name__ == '__main__':
-	env = Maze()
-	print(env.get_info())
-	print(env.display_env())
-	obs, r, done = env.step(1)
-	print("reward: " + str(r) + " done: " + str(done))
-	obs, r, done = env.step(1)
-	print("reward: " + str(r) + " done: " + str(done))
-	obs, r, done = env.step(0)
-	print("reward: " + str(r) + " done: " + str(done))
-	obs, r, done = env.step(0)
-	print("reward: " + str(r) + " done: " + str(done))
-	# print(env.get_info())
-	print(env.display_env())
+# if __name__ == '__main__':
+# 	env = Maze()
+# 	print(env.get_info())
+# 	print(env.display_env())
+# 	# print(env.get_info())
+# 	print(env.display_env())
 
 
 
