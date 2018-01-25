@@ -1,4 +1,4 @@
-![q-learning td error](https://raw.githubusercontent.com/PierpaoloLucarelli/QLearningMaze/master/)qlearn.gif
+![q-learning td error](https://raw.githubusercontent.com/PierpaoloLucarelli/QLearningMaze/master/qlearn.gif)
 # QLearningMaze
 
 Implementation of Q-Learning usind TD error for optimally navigating a maze while avoiding a movign enemy.
