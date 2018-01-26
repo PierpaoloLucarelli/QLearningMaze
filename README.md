@@ -1,4 +1,6 @@
 ![q-learning td error](https://raw.githubusercontent.com/PierpaoloLucarelli/QLearningMaze/master/qlearn.gif)
+Goal: Reaching the yellow oval while avoiding black blocks and moving enemy (red block)
+
 # QLearningMaze
 
 Implementation of Q-Learning usind TD error for optimally navigating a maze while avoiding a movign enemy.
