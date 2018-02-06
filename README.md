@@ -4,7 +4,7 @@ Goal: Reaching the yellow oval while avoiding black blocks and moving enemy (red
 
 # QLearningMaze
 
-Implementation of Q-Learning usind TD error for optimally navigating a maze while avoiding a movign enemy.
+Implementation of Q-Learning usind TD error for optimally navigating a maze while avoiding a moving enemy.
 
 # To run:
 ```sh
