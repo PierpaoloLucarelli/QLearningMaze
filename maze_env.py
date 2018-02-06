@@ -14,6 +14,7 @@ class Maze(object):
 		self.goal = np.array([2,3])
 		self.actor = np.array([0,0])
 		self.enemy = np.array([2,4])
+		self.win_count = 0
 
 	def reset(self):
 		self.actor = np.array([0,0])
@@ -50,6 +51,7 @@ class Maze(object):
 		if(np.array_equal(self.actor, self.goal)):
 			r = 1
 			done = True
+			self.win_count += 1
 		elif np.array_equal(self.actor, self.enemy):
 			r = -1
 			done = True

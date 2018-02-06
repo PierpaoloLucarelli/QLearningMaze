@@ -38,7 +38,7 @@ def test(vis_):
 
 def run_optimal():
 	RL.load_Qtable()
-	for episode in range(20):
+	for episode in range(5):
 		observation = env.reset()
 		while(True):
 			vis.update_canvas(env.actor, env.enemy)
@@ -47,6 +47,7 @@ def run_optimal():
 			observation = observation_
 			if done:
 				break
+	print("Games won: " + str(env.win_count))
 	vis.destroy()
 
 if __name__ == '__main__':
