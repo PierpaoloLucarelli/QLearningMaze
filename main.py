@@ -40,11 +40,12 @@ def run_optimal():
 	RL.load_Qtable()
 	for episode in range(5):
 		observation = env.reset()
+		vis.update_canvas(env.actor, env.enemy)
 		while(True):
-			vis.update_canvas(env.actor, env.enemy)
 			action = RL.choose_action(str(observation))
 			observation_, reward, done = env.step(action)
 			observation = observation_
+			vis.update_canvas(env.actor, env.enemy)
 			if done:
 				break
 	print("Games won: " + str(env.win_count))
