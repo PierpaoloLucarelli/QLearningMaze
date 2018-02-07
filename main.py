@@ -38,7 +38,7 @@ def test(vis_):
 
 def run_optimal():
 	RL.load_Qtable()
-	for episode in range(5):
+	for episode in range(20):
 		observation = env.reset()
 		vis.update_canvas(env.actor, env.enemy)
 		while(True):
