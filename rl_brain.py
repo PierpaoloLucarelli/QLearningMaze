@@ -37,7 +37,7 @@ class QLearn:
 			q_target = r + self.gamma * self.q_table.ix[s_, :].max()  # next state is not terminal
 		else:
 			q_target = r  # next state is terminal
-		self.q_table.ix[s, a] += self.lr * (q_target - q_predict)  # update
+		self.q_table.ix[s, a] += self.lr * (q_target - q_predict)
 
 	def check_state_exist(self, state):
 		if state not in self.q_table.index:
