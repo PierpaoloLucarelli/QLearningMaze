@@ -32,4 +32,4 @@ Q-values are updated based on the following formula:
 
 ## pseudo formula
 
-newVal = oldVal + learningRate * (reward + e_greedy * maxValOfNextState + oldVal)
+newVal = oldVal + learningRate * (reward + discount_val * maxValOfNextState - oldVal)
